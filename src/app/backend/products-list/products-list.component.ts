@@ -29,34 +29,14 @@ export class ProductsListComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.productsService.getList().then(list => {
+    this.productsService.getList((list) => {
       this.products = list;
     });
   }
 
-  saveChanges() {
-    this.onSave.emit(this.editProduct);
-    this.selectedProduct = this.editProduct;
-    this.editProduct = null;
+  public callback(list) {
+    this.products = list;
   }
-
-  saveNewChanges() {
-    this.onSave.emit(this.newProduct);
-    this.newProduct = null;
-  }
-
-  // set setProducts(products) {
-
-  //   for(let product of products) {
-
-  //     let item = Object.assign({}, product);
-
-  //     item.price = item.price * item.id;
-      
-  //   }
-
-  //   this.products = products;
-  // }
 
   previewProduct(product) {
     this.mode = 'preview';
@@ -70,15 +50,39 @@ export class ProductsListComponent implements OnInit {
     }
   }
 
+  removeProduct(product) {
+    if(product.id) {
+      this.productsService.removeProduct(product, (list) => {
+        this.products = list;
+      });
+    }
+  }
+
   openEdit(selectedProduct) {
+    console.log('list')
     this.mode = 'edit';
     this.editProduct = Object.assign({}, selectedProduct);
     this.selectedProduct = null;
   }
 
+  saveProduct(product) {
+    this.newProduct = null;
+    this.editProduct = null;
+    if(product.id) {
+      this.productsService.update(product, (list, product) => {
+        this.products = list;
+        this.selectedProduct = product;
+      });
+    } else {
+      this.productsService.save(product, (list, product) => {
+        this.products = list;
+        this.selectedProduct = product;
+      });
+    }
+  }
+
   openNew() {
     this.mode = 'new';
-
     this.selectedProduct = null;
     this.editProduct = null;
     this.newProduct = {
@@ -86,14 +90,4 @@ export class ProductsListComponent implements OnInit {
       price: 0
     };
   }
-
-  // saveChanges() {
-  //   console.log('this.editProduct', this.editProduct);
-
-  //   //let product = this.products.find(item => item.id == this.editProduct.id);
-    
-  //   this.coKolwiek.emit(this.editProduct);
-
-  // }
-
 }

@@ -14,30 +14,6 @@ export class ProductsService {
     this.http = http;
   }
 
-  public save(product, callback) {
-    this.http.post(this.productsUrl, product).subscribe((response: Response) => {
-      let product = response.json();
-      this.getList(callback, product);
-    });
-  }
-
-  public update(product, callback) {
-    let url = this.productsUrl + '/' + product.id;
-    this.http.put(url , product).subscribe((response: Response) => {
-      let product = response.json();
-      this.getList(callback, product);
-    });
-  }
-
-  public removeProduct(product, callback) {
-    let url = this.productsUrl + '/' + product.id;
-    this.http.delete(url).subscribe((response: Response) => {
-      let data = response.json();
-      console.log('response ', data);
-      this.getList(callback);
-    });
-  }
-
   public getItem(productId, callback) {
     let url = this.productsUrl + '/' + productId;
     this.http.get(this.productsUrl).subscribe((response: Response) => {

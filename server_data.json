@@ -1,5 +1,5 @@
 {
-  "products":[
+  "products": [
     {
       "id": 1,
       "name": "Product 1",
@@ -13,7 +13,17 @@
     {
       "id": 3,
       "name": "Product 3",
-      "price": 30.69
+      "price": 30.64
+    },
+    {
+      "name": "New Product",
+      "price": 69,
+      "id": 6
+    },
+    {
+      "name": "dfdaf",
+      "price": 234,
+      "id": 7
     }
   ]
 }

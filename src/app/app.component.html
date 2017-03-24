@@ -1,8 +1,12 @@
 <div class="container">
-  
-  <h1>
-    {{title}}
-  </h1>
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <a class="navbar-brand" [routerLink]="['/']">{{title}}</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" [routerLink]="['/admin']">Admin </a>
+      </div>
+    </div>
+  </nav>
 
   <router-outlet></router-outlet>
   

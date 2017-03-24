@@ -6,6 +6,7 @@
           <th>#</th>
           <th>Name</th>
           <th>Price</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -13,6 +14,9 @@
           <td>{{product.id}}</td>
           <td>{{product.name}}</td>
           <td>{{product.price}}</td>
+          <td>
+              <button (click)="removeProduct(product)" class="btn btn-sm btn-danger">Remove</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -20,59 +24,11 @@
       <button class="btn btn-default" (click)="openNew()" >New Product</button>
     </p>
   </div>
-  <div class="col-md-6" [ngSwitch]="mode" >
-    <div *ngSwitchCase="'preview'">preview</div>
-    <div *ngSwitchCase="'edit'">edit</div>
-    <div *ngSwitchCase="'new'">new</div>
-</div>
   <div class="col-md-6">
 
-    <template [ngIf]="selectedProduct" >
-      <div class="card">
-        <div class="card-block">
-          <h4 class="card-title">{{ selectedProduct.name }}</h4>
-          <p class="card-text">Price - {{ selectedProduct.price }}</p>
-          <p>
-            <button class="btn btn-default" (click)="openEdit(selectedProduct)" >Edit product</button>
-          </p>
-        </div>
-      </div>
-    </template>
+    <app-product-preview *ngIf="selectedProduct" (openEdit)="openEdit($event)" [selectedProduct]="selectedProduct" ></app-product-preview>
 
-    <div class="card" *ngIf="editProduct">
-        <div class="card-block">
-          <h4 class="card-title">Edit Product</h4>
-            <form>
-              <div class="form-group">
-              <input type="text" name="name" [(ngModel)]="editProduct.name" class="form-control" />
-              </div>
-              <div class="form-group">
-              <input type="number" name="price" [(ngModel)]="editProduct.price" class="form-control" />
-              </div>
-            </form>
-          <p>
-            <button class="btn btn-default" (click)="saveChanges()">Save product</button>
-          </p>
-        </div>
-      </div>
+    <app-product-form *ngIf="editProduct" (save)="saveProduct($event)" [product]="editProduct"></app-product-form>
 
-      <div class="card" *ngIf="newProduct">
-        <div class="card-block">
-          <h4 class="card-title">New Product</h4>
-            <form>
-              <div class="form-group">
-              <input type="text" name="name" [(ngModel)]="newProduct.name" class="form-control" />
-              </div>
-              <div class="form-group">
-              <input type="number" name="price" [(ngModel)]="newProduct.price" class="form-control" />
-              </div>
-            </form>
-          <p>
-            <button class="btn btn-default" (click)="saveNewChanges()">Save product</button>
-          </p>
-        </div>
-      </div>
-
-
-  </div>
+    <app-product-form *ngIf="newProduct" (save)="saveProduct($event)" [product]="newProduct"></app-product-form>
 </div>
