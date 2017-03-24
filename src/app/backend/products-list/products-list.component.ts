@@ -29,7 +29,9 @@ export class ProductsListComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.productsService.getList();
+    this.productsService.getList().then(list => {
+      this.products = list;
+    });
   }
 
   saveChanges() {
